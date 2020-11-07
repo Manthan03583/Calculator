@@ -2,13 +2,12 @@ package com.example.android.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.mariuszgromada.math.mxparser.*;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.Scriptable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -159,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 process = InputTextView.getText().toString();
-                InputTextView.setText(process+"x");
+                InputTextView.setText(process+"×");
             }
         });
 
@@ -207,26 +206,17 @@ public class MainActivity extends AppCompatActivity {
         buttonEqual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process = InputTextView.getText().toString();
+            String finalResult = "";
+            process = InputTextView.getText().toString();
 
-                process = process.replaceAll("×","*");
-                process = process.replaceAll("%","/100");
-                process = process.replaceAll("÷","/");
+            process = process.replaceAll("×","*");
+            process = process.replaceAll("%","/100");
+            process = process.replaceAll("÷","/");
 
-                Context rhino = Context.enter();
+            Expression exp = new Expression(process);
+            finalResult = String.valueOf(exp.calculate());
 
-                rhino.setOptimizationLevel(-1);
-
-                String finalResult = "";
-
-                try {
-                    Scriptable scriptable = rhino.initStandardObjects();
-                    finalResult = rhino.evaluateString(scriptable,process,"javascript",1,null).toString();
-                }catch (Exception e){
-                    finalResult="Error";
-                }
-
-                OutputTextView.setText(finalResult);
+            OutputTextView.setText(finalResult);
             }
         });
     }
