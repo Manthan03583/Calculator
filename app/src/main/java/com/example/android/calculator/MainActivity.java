@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button button0,button1,button2,button3,button4,button5,button6,button7,
             button8,button9,buttonMultiply,buttonPlus,buttonMinus,buttonDivision,buttonEqual,
-            buttonDot,buttonClear,buttonPercent,buttonBracket;
+            buttonDot,buttonClear,buttonPercent,buttonOpenBracket,buttonCloseBracket;
     TextView InputTextView,OutputTextView;
     String process;
     boolean checkBracket = false;
@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
         buttonClear = findViewById(R.id.btnClear);
         buttonDot = findViewById(R.id.btnDot);
-        buttonBracket = findViewById(R.id.btnBracket);
+        buttonOpenBracket = findViewById(R.id.btnopenBracket);
+        buttonCloseBracket = findViewById(R.id.btncloseBracket);
 
         InputTextView = findViewById(R.id.input_text_view);
         OutputTextView = findViewById(R.id.output_text_view);
@@ -186,20 +187,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonBracket.setOnClickListener(new View.OnClickListener() {
+        buttonOpenBracket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(checkBracket) {
-                    process = InputTextView.getText().toString();
-                    InputTextView.setText(process+")");
-                    checkBracket=false;
-                }
-                else{
                     process = InputTextView.getText().toString();
                     InputTextView.setText(process+"(");
-                    checkBracket=true;
-                }
+            }
+        });
+
+        buttonCloseBracket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                process = InputTextView.getText().toString();
+                InputTextView.setText(process+")");
             }
         });
 
